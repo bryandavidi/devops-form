@@ -2,32 +2,50 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { Button, Select } from 'antd'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [inputType, setInputType] = useState<string>('')
+
+  const inputList = [
+    {value: 'text', label: 'Texto'},
+    {value: 'checkbox', label: 'Varias Opciones'},
+    {value: 'select', label: 'Casillas'},
+    {value: 'dropdown', label: 'Desplegable'}
+  ]
+
+  const formIputsList = [{}]
+
+  const handleSelectInputType =(value : string) =>{
+    setInputType(value)
+  }
+
+  const handleButtonAdd= () =>{
+    formIputsList.push(inputType)
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className='container'>
+        <div className='options'>
+          <Button onClick={handleButtonAdd}>Add</Button>
+          <Select
+            defaultValue={inputList[0].label}
+            style={{width:120}}
+            onChange={handleSelectInputType}
+            options={inputList}
+          />
+        </div>
+        <div className='form'>
+          <form>
+            {formIputsList.map((form) => (
+              
+            ))}
+          </form>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      
     </>
   )
 }
